@@ -1,0 +1,23 @@
+{
+  "additional_notes": "We don't have specific information about grape in our database yet.",
+  "all_symptoms": [],
+  "confidence": 0,
+  "diagnosis": "Unknown Plant Type",
+  "matched_symptoms": [],
+  "plant_type": "Grape",
+  "prevention": [
+    "Maintain good garden hygiene",
+    "Monitor plants regularly",
+    "Keep records of plant health"
+  ],
+  "scientific_name": "N/A",
+  "spread_risk": "unknown",
+  "success": true,
+  "timestamp": "2026-03-07T02:25:52.061341",
+  "treatment": [
+    "Consult with local agricultural extension office",
+    "Take photos and seek expert identification",
+    "Research common diseases for your specific plant variety"
+  ],
+  "urgency": "unknown"
+}

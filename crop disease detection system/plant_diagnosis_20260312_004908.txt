@@ -1,0 +1,63 @@
+
+╔══════════════════════════════════════════════════════════════╗
+║          PLANT DISEASE DIAGNOSIS REPORT                      ║
+╚══════════════════════════════════════════════════════════════╝
+
+Report Generated: 2026-03-12 00:49:05
+
+┌──────────────────────────────────────────────────────────────┐
+│ PLANT INFORMATION                                            │
+└──────────────────────────────────────────────────────────────┘
+
+Plant Type: Tomato
+Diagnosis: Early Blight
+Scientific Name: Alternaria solani
+Confidence Level: 44.0%
+
+┌──────────────────────────────────────────────────────────────┐
+│ SYMPTOM ANALYSIS                                             │
+└──────────────────────────────────────────────────────────────┘
+
+Matched Symptoms:
+  ✓ dark spots on leaves
+
+┌──────────────────────────────────────────────────────────────┐
+│ RISK ASSESSMENT                                              │
+└──────────────────────────────────────────────────────────────┘
+
+Urgency Level: 🟡 MEDIUM
+Spread Risk: 🔴 HIGH
+
+┌──────────────────────────────────────────────────────────────┐
+│ RECOMMENDED TREATMENT                                        │
+└──────────────────────────────────────────────────────────────┘
+
+1. Remove infected leaves immediately
+2. Apply copper-based fungicide every 7-10 days
+3. Improve air circulation around plants
+4. Water at soil level, avoid wetting leaves
+5. Mulch around base to prevent soil splash
+
+┌──────────────────────────────────────────────────────────────┐
+│ PREVENTION MEASURES                                          │
+└──────────────────────────────────────────────────────────────┘
+
+1. Rotate crops annually (3-year cycle)
+2. Use resistant varieties
+3. Maintain proper plant spacing (24-36 inches)
+4. Apply preventive fungicide during humid weather
+
+┌──────────────────────────────────────────────────────────────┐
+│ ADDITIONAL NOTES                                             │
+└──────────────────────────────────────────────────────────────┘
+
+💧 High humidity favors fungal growth. Improve ventilation.
+💦 Switch to soil-level watering to reduce leaf wetness.
+
+═══════════════════════════════════════════════════════════════
+
+DISCLAIMER: This diagnosis is based on symptom descriptions provided.
+For critical cases, consult with a professional plant pathologist or
+your local agricultural extension office.
+
+═══════════════════════════════════════════════════════════════

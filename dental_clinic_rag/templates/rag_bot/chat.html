@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Clinic AI Assistant</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-tooth"></i>
+                    <h1>Dental Clinic AI Assistant</h1>
+                </div>
+                <div class="header-actions">
+                    <button id="clearChatBtn" class="btn btn-secondary">
+                        <i class="fas fa-trash"></i> Clear Chat
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Sidebar - Document Management -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h2><i class="fas fa-file-pdf"></i> Knowledge Base</h2>
+                    
+                    <!-- Upload Form -->
+                    <div class="upload-section">
+                        <h3>Upload PDF Document</h3>
+                        <form id="uploadForm" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="docTitle">Document Title</label>
+                                <input type="text" id="docTitle" name="title" placeholder="e.g., Dental Care Guidelines" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pdfFile">PDF File</label>
+                                <input type="file" id="pdfFile" name="pdf_file" accept=".pdf" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="docDescription">Description (Optional)</label>
+                                <textarea id="docDescription" name="description" rows="2" placeholder="Brief description of the document"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-upload"></i> Upload & Process
+                            </button>
+                        </form>
+                        <div id="uploadStatus" class="status-message"></div>
+                    </div>
+
+                    <!-- Document List -->
+                    <div class="documents-list">
+                        <h3>Uploaded Documents</h3>
+                        <div id="documentsContainer">
+                            {% if documents %}
+                                {% for doc in documents %}
+                                    <div class="document-item" data-id="{{ doc.id }}">
+                                        <div class="doc-info">
+                                            <div class="doc-title">{{ doc.title }}</div>
+                                            <div class="doc-meta">
+                                                <span class="doc-status {% if doc.is_processed %}processed{% else %}unprocessed{% endif %}">
+                                                    {% if doc.is_processed %}
+                                                        <i class="fas fa-check-circle"></i> Processed
+                                                    {% else %}
+                                                        <i class="fas fa-exclamation-circle"></i> Not Processed
+                                                    {% endif %}
+                                                </span>
+                                                <span class="doc-chunks">{{ doc.chunks.count }} chunks</span>
+                                            </div>
+                                        </div>
+                                        <div class="doc-actions">
+                                            {% if not doc.is_processed %}
+                                                <button class="btn-icon process-btn" onclick="processDocument({{ doc.id }})" title="Process">
+                                                    <i class="fas fa-cog"></i>
+                                                </button>
+                                            {% endif %}
+                                            <button class="btn-icon delete-btn" onclick="deleteDocument({{ doc.id }})" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="no-documents">No documents uploaded yet. Upload a PDF to get started!</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Chat Area -->
+            <main class="chat-area">
+                <div class="chat-container">
+                    <div id="chatMessages" class="chat-messages">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="message {% if message.role == 'user' %}user-message{% else %}bot-message{% endif %}">
+                                    <div class="message-header">
+                                        <i class="fas {% if message.role == 'user' %}fa-user{% else %}fa-robot{% endif %}"></i>
+                                        <span class="message-role">{{ message.role|title }}</span>
+                                    </div>
+                                    <div class="message-content">
+                                        {{ message.content|linebreaks }}
+                                    </div>
+                                    {% if message.source_chunks %}
+                                        <div class="message-sources">
+                                            <small><i class="fas fa-bookmark"></i> Sources: {{ message.source_chunks }}</small>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="welcome-message">
+                                <i class="fas fa-tooth"></i>
+                                <h2>Welcome to Dental Clinic AI Assistant!</h2>
+                                <p>I'm here to help you with information about dental care, procedures, appointments, and more. Upload PDF documents to enhance my knowledge base, then ask me anything!</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Chat Input -->
+                    <div class="chat-input-container">
+                        <form id="chatForm" class="chat-form">
+                            <input 
+                                type="text" 
+                                id="messageInput" 
+                                placeholder="Ask me about dental care, procedures, or clinic information..." 
+                                autocomplete="off"
+                                required
+                            >
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="{% static 'js/chat.js' %}"></script>
+</body>
+</html>

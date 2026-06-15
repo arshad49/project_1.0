@@ -1,0 +1,33 @@
+{
+  "additional_notes": "\ud83e\udda0 Bacterial infections can spread quickly through water and tools.\nAlways disinfect tools after working with infected plants.",
+  "all_symptoms": [
+    "small water-soaked spots",
+    "spots turn brown or black",
+    "yellow halo around spots",
+    "spots on fruits (scabby)",
+    "leaf drop in severe cases"
+  ],
+  "confidence": 43.99999999999999,
+  "diagnosis": "Bacterial Spot",
+  "matched_symptoms": [
+    "small water-soaked spots"
+  ],
+  "plant_type": "Tomato",
+  "prevention": [
+    "Use disease-free seeds",
+    "Practice crop rotation",
+    "Control weeds",
+    "Avoid overhead irrigation"
+  ],
+  "scientific_name": "Xanthomonas campestris",
+  "spread_risk": "high",
+  "success": true,
+  "timestamp": "2026-03-07T02:25:18.504607",
+  "treatment": [
+    "Apply copper-based bactericide",
+    "Remove infected plant material",
+    "Avoid working with wet plants",
+    "Disinfect tools after use"
+  ],
+  "urgency": "medium"
+}

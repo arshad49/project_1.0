@@ -1,0 +1,27 @@
+{
+  "additional_notes": "\u26a0 LATE BLIGHT IS HIGHLY CONTAGIOUS! Take immediate action to prevent spread.\nConsider removing entire plant if infection is severe.",
+  "all_symptoms": [
+    "water-soaked lesions",
+    "white mold",
+    "rapid wilting"
+  ],
+  "confidence": 53.333333333333336,
+  "diagnosis": "Late Blight",
+  "matched_symptoms": [
+    "water-soaked lesions"
+  ],
+  "plant_type": "Potato",
+  "prevention": [
+    "Good drainage",
+    "Resistant varieties"
+  ],
+  "scientific_name": "Not specified",
+  "spread_risk": "very high",
+  "success": true,
+  "timestamp": "2026-03-07T02:26:04.510559",
+  "treatment": [
+    "Destroy infected plants",
+    "Apply fungicide"
+  ],
+  "urgency": "high"
+}

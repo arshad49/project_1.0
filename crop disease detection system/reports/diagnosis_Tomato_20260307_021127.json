@@ -1,0 +1,32 @@
+{
+  "additional_notes": "\ud83d\udca6 Switch to soil-level watering to reduce leaf wetness.",
+  "all_symptoms": [
+    "dark spots on leaves",
+    "concentric rings on leaves",
+    "yellowing around spots",
+    "lower leaves affected first",
+    "brown lesions on stem"
+  ],
+  "confidence": 0,
+  "diagnosis": "Early Blight",
+  "matched_symptoms": [],
+  "plant_type": "Tomato",
+  "prevention": [
+    "Rotate crops annually (3-year cycle)",
+    "Use resistant varieties",
+    "Maintain proper plant spacing (24-36 inches)",
+    "Apply preventive fungicide during humid weather"
+  ],
+  "scientific_name": "Alternaria solani",
+  "spread_risk": "high",
+  "success": true,
+  "timestamp": "2026-03-07T02:11:27.807111",
+  "treatment": [
+    "Remove infected leaves immediately",
+    "Apply copper-based fungicide every 7-10 days",
+    "Improve air circulation around plants",
+    "Water at soil level, avoid wetting leaves",
+    "Mulch around base to prevent soil splash"
+  ],
+  "urgency": "medium"
+}

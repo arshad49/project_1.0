@@ -1,0 +1,168 @@
+{
+  "name": "WhatsApp Followup Full Flow",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://reapproachable-polyspermia-braiden.ngrok-free.dev/today-followups",
+        "options": {}
+      },
+      "id": "04556f9d-42e4-4d4f-ba0a-092c351781b4",
+      "name": "Get Followups",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -624,
+        864
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://bot.wabis.in/api/v1/whatsapp/send/template",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "apiToken",
+              "value": "19825|AubAVeArdqXse5NGNyP7xDUc3Jm1SdvEmQ3vUKUvc4377582"
+            },
+            {
+              "name": "phone_number_id",
+              "value": "1043015062233729"
+            },
+            {
+              "name": "template_id",
+              "value": "360817"
+            },
+            {
+              "name": "templateVariable-name-2",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "name": "phone_number",
+              "value": "={{ $json.phone }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "006e2ced-1a87-4e9c-87e5-d74c3cb25f09",
+      "name": "Trigger Bot (Send Message)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -176,
+        832
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "id": "966153f9-14a9-4d9d-9361-f9372177af8f",
+      "name": "Schedule Trigger2",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        -832,
+        864
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "6dd0aa81-8b47-4839-b49e-6dccfce08d2f",
+      "name": "Split In Batches1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        -432,
+        864
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://reapproachable-polyspermia-braiden.ngrok-free.dev/customer/{{ $('Get Followups').item.json.id }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"status\": \"sent\"\n}",
+        "options": {}
+      },
+      "id": "de3e4a7d-7990-4384-a628-8c2532d4c1f9",
+      "name": "Mark as Sent1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -16,
+        832
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get Followups": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger Bot (Send Message)": {
+      "main": [
+        [
+          {
+            "node": "Mark as Sent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Get Followups",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches1": {
+      "main": [
+        [
+          {
+            "node": "Trigger Bot (Send Message)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "29b5b893-d88c-433c-b1c2-67b9f410fefb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "75451221ec33a73df5f995761c77b8c623ff6a41e27ff37148f6cf68167677f5"
+  },
+  "id": "H9x6PsqdTbHCUvt9",
+  "tags": []
+}

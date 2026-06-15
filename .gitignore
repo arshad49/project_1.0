@@ -1,0 +1,17 @@
+venv/
+.venv/
+lib/
+__pycache__/
+*.pyc
+.DS_Store
+
+*.pkl
+*.pt
+*.pth
+*.h5
+*.ckpt
+
+dataset/
+datasets/
+data/
+

@@ -1,0 +1,32 @@
+{
+  "additional_notes": "",
+  "all_symptoms": [
+    "olive-green spots on leaves",
+    "corky spots on fruit",
+    "distorted leaves",
+    "premature leaf drop"
+  ],
+  "confidence": 47.5,
+  "diagnosis": "Apple Scab",
+  "matched_symptoms": [
+    "olive-green spots on leaves"
+  ],
+  "plant_type": "Apple",
+  "prevention": [
+    "Plant scab-resistant varieties",
+    "Annual pruning",
+    "Clean up fallen leaves in autumn",
+    "Preventive fungicide sprays in spring"
+  ],
+  "scientific_name": "Venturia inaequalis",
+  "spread_risk": "high",
+  "success": true,
+  "timestamp": "2026-03-07T02:11:49.047768",
+  "treatment": [
+    "Apply fungicide (captan or ziram) at bud break",
+    "Rake and destroy fallen leaves",
+    "Prune for better air circulation",
+    "Apply lime sulfur in dormant season"
+  ],
+  "urgency": "medium"
+}

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerala Rain Predictor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-predict {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-predict:hover {
+            transform: translateY(-2px);
+        }
+
+        .result-box {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .result-box.rain {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .result-box.no-rain {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .result-box h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .result-box .probability {
+            font-size: 1.5em;
+            opacity: 0.95;
+        }
+
+        .error-box {
+            background: #fee;
+            border-left: 4px solid #f44;
+            color: #c33;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+
+        .info-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .info-section h3 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+
+        .info-section ul {
+            list-style-position: inside;
+            color: #555;
+        }
+
+        .inputs-display {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌧️ Kerala Rain Predictor</h1>
+            <p>AI-Powered Rainfall Prediction for India</p>
+        </div>
+
+        <div class="content">
+            <form method="POST" action="/predict">
+                <div class="form-group">
+                    <label for="month">Month</label>
+                    <select name="month" id="month" required>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="temperature">Temperature (°C)</label>
+                    <input type="number" name="temperature" id="temperature" 
+                           step="0.1" min="15" max="45" value="30" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="humidity">Humidity (%)</label>
+                    <input type="number" name="humidity" id="humidity" 
+                           step="0.1" min="20" max="100" value="75" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pressure">Atmospheric Pressure (hPa)</label>
+                    <input type="number" name="pressure" id="pressure" 
+                           step="0.1" min="980" max="1020" value="1000" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wind_speed">Wind Speed (km/h)</label>
+                    <input type="number" name="wind_speed" id="wind_speed" 
+                           step="0.1" min="0" max="100" value="15" required>
+                </div>
+
+                <button type="submit" class="btn-predict">
+                    🎯 Predict Rainfall
+                </button>
+            </form>
+
+            {% if result %}
+            <div class="result-box {{ 'rain' if result.is_rain else 'no-rain' }}">
+                <h2>{{ result.prediction }}</h2>
+                <div class="probability">Probability: {{ result.probability }}</div>
+                
+                {% if inputs %}
+                <div class="inputs-display">
+                    <strong>Input Parameters:</strong><br>
+                    Month: {{ inputs.month }} | 
+                    Temperature: {{ inputs.temperature }}°C | 
+                    Humidity: {{ inputs.humidity }}% | 
+                    Pressure: {{ inputs.pressure }} hPa | 
+                    Wind: {{ inputs.wind_speed }} km/h
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if error %}
+            <div class="error-box">
+                <strong>Error:</strong> {{ error }}
+            </div>
+            {% endif %}
+
+            <div class="info-section">
+                <h3>ℹ️ About This Predictor</h3>
+                <ul>
+                    <li>Uses Machine Learning (Random Forest) algorithm</li>
+                    <li>Trained on Kerala/India rainfall patterns</li>
+                    <li>Considers monsoon seasons (Southwest & Northeast)</li>
+                    <li>Takes into account temperature, humidity, pressure, and wind</li>
+                    <li>Accuracy: ~85-90% on test data</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
