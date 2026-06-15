@@ -14,4 +14,5 @@ __pycache__/
 dataset/
 datasets/
 data/
-
+fake news detector/Fake.csv
+fake news detector/True.csv
