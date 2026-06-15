@@ -1,0 +1,253 @@
+{
+  "name": "bussiness analyzer",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "SBA REPORT",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Startup Name"
+            },
+            {
+              "fieldLabel": "Industry / Sector"
+            },
+            {
+              "fieldLabel": "What problem does your startup solve",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Target Customers",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Monthly Revenue (₹)",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "Monthly Expenses (₹)",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "Main Competitors"
+            },
+            {
+              "fieldLabel": "Biggest Challenge Right Now",
+              "fieldType": "textarea"
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        192,
+        432
+      ],
+      "id": "b03061bd-f9af-4f43-9b72-8c60aac07b04",
+      "name": "On form submission",
+      "webhookId": "f03c4a10-c898-4db9-b815-5d84a34f9c94"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ 'Startup Name:\\nName: ' + $json['Startup Name'] + '\\n Industry: ' + $json['Industry / Sector'] + '\\n problrm solution: ' + $json['What problem does your startup solve'] + '\\n\\ntarget customer: ' + $json['Target Customers'] + '\\n monthly revenu' +  $json['Monthly Revenue (₹)']+ '\\n\\n monthl expense: ' + $json['Monthly Expenses (₹)'] + '\\n main competitors: ' + $json['Main COmpetitors'] + '\\n: biggest challenges right now' +  $json['Biggest Challenge Right Now']}}",
+        "options": {
+          "systemMessage": "=You are a professional startup business analyst.\n\nAnalyze the following startup information and generate a clear report.\n\nStartup Name: \nIndustry: {{ $json['Industry / Sector'] }}\nProblem Solved: {{ $json['What problem does your startup solve'] }}\nTarget Customers: {{ $json['Target Customers'] }}\nMonthly Revenue:{{ $json['Monthly Revenue (₹)'] }}\nMonthly Expenses: {{ $json['Monthly Expenses (₹)'] }}\nCompetitors:{{ $json['Main Competitors'] }}\nBiggest Challenge: {{ $json['Biggest Challenge Right Now'] }}\n\nBased on this data generate:\n\n1. Startup Score (0-100)\n2. Financial Health Analysis\n3. SWOT Analysis (Strength, Weakness, Opportunity, Threat)\n4. Growth Strategy\n5. Marketing Suggestions\n6. Risk Analysis\n\nMake the report clear, professional, and easy to understand for a startup founder.\nReturn the output in a structured format.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        416,
+        528
+      ],
+      "id": "6d3472ed-c0b4-4150-bc46-d87e4da013e9",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        272,
+        704
+      ],
+      "id": "23347785-4553-46f6-8384-9cdb4c7c6b4a",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "995vrXTyyNcTUhek",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "html": "{{ $('AI Agent').item.json.output }}"
+      },
+      "id": "90d0f540-6be2-40e1-b2f5-a4d57fa0529c",
+      "name": "Format Report Display",
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        752,
+        528
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pdfshift.io/v3/convert/pdf",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "sk_42f0654d3b2bd2f05765f37fb42915230e020abb"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"source\": '<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body>' + $json.html + '</body></html>' } }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        976,
+        528
+      ],
+      "id": "42c26c83-2321-420b-b58b-e7571ae5085e",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "name": "=SBA_report{{ $('On form submission').item.json['Startup Name'] }}_{{ $now.format('yyyy-MM-dd') }}.pdf",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1_UGpTAhJ4orP7CwcV6MKtWqlsQRQaNZw",
+          "mode": "list",
+          "cachedResultName": "SBA",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1_UGpTAhJ4orP7CwcV6MKtWqlsQRQaNZw"
+        },
+        "options": {}
+      },
+      "id": "24ac869f-eaf2-474a-9655-915172adc179",
+      "name": "Upload PDF to Google Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1184,
+        416
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "4ykS6rD09T4wm1bS",
+          "name": "Google Drive account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "On form submission": [
+      {
+        "json": {
+          "Startup Name": "TECHLYNK",
+          "Industry / Sector": "technology",
+          "What problem does your startup solve": "we automate the businnes with ai or aiagent",
+          "Target Customers": "all tyoe of small scale bussiness",
+          "Monthly Revenue (₹)": 100000,
+          "Monthly Expenses (₹)": 40000,
+          "Main Competitors": "dont know",
+          "Biggest Challenge Right Now": "dont kow the markert who are the competitirs",
+          "submittedAt": "2026-03-15T03:39:01.211+05:30",
+          "formMode": "test"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Format Report Display",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Report Display": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Upload PDF to Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "11839e78-66fb-4342-a221-a6fb48180d2d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5833cfbd9bc87b921f9f22d51f1e97ca817305672e625bbff07fbe1ae98ad279"
+  },
+  "id": "et1xJRglrmCMJbt3",
+  "tags": []
+}
